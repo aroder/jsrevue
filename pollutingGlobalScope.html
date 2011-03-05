@@ -1,0 +1,37 @@
+<html>
+    <head>
+        <script src="jquery-1.5.1.js"></script>
+        <script>
+        	
+			// globally scoped variables are an ANTI pattern
+			
+            $(function(){
+                
+				// the jQuery library defines a variable named "$"
+				
+				$('#myDiv').append($('<br /><span>yo</span>'));
+                
+				// uncomment the line below to see the effects of 
+				// clobbering a globally scoped variable
+                
+				//$ = alert;
+                
+                $('#myDiv').append($('<br /><span>yo again</span>'));
+            });
+			
+			// okay, you'll never name a variable "$"
+			// what about a variable named "counter"?
+			
+			// what if you load in libararies from 7 different URLs?
+			// what if they all have global variables that clobber each other?
+			
+			// use the module pattern, create your own namespace
+			// a namespace is just a an object that contains all your other 
+			// objects and functions
+        </script>
+    </head>
+    <body>
+        <div id="myDiv">
+        </div>
+    </body>
+</html>

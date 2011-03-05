@@ -1,0 +1,23 @@
+<html>
+    <head>
+        <script src="jquery-1.5.1.js"></script>
+    </head>
+    <body>
+        <div id="log">
+        </div>
+        <script>
+        	// facade pattern - facades can simplify complicated APIs
+			
+            // jQuery provides a facade to a many DOM operations
+            $('#log').append('hello').append($('<br />'));
+            
+            // without jQuery
+			var logNode = document.getElementById('log');
+			logNode.innerHTML += 'goodbye';
+			var brNode = document.createElement('br');
+			logNode.appendChild(brNode);
+			
+			
+        </script>
+    </body>
+</html>

@@ -1,0 +1,33 @@
+<script>
+	
+	// note how different this is from object literals
+	
+	// it's hard to tell what makes this a "constructor function"
+	// it's not in the definition, it's in the INVOCATION
+	
+	var Cat = function(name) {
+		this.name = name;
+		this.speak = function() {
+			document.writeln('<br />"meow" says ' + this.name);
+		};
+	}
+	
+	var albert = new Cat('Albert');
+	
+	Cat.prototype.pee = function() {
+		document.writeln('<br />' + this.name + ' goes in the litterbox, of course');
+	}
+	
+	var antonio = new Cat('Antonio');
+	antonio.pee();
+	
+	// even objects created from constructor functions see the new function
+	// that is on the prototype
+	albert.pee();
+	
+	
+	// now, step back and imagine the power... you could modify the 
+	// Array constructor functions to create a forEach function
+	// and then call forEach on any array in your javascript app
+	// C#'s extension methods are child's play
+</script>

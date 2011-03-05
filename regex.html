@@ -1,0 +1,16 @@
+<script>
+	// regular expression literal
+	var pattern = /[\d]+/;
+	
+	// regular expression from constructor function
+	var pattern2 = new RegExp('[\d]+');
+	
+	var string = 'bla123bla';
+	
+	var match = string.match(pattern);
+	
+	document.writeln(match);
+	
+	// there are other methods around regex beyond just "match"
+	
+</script>

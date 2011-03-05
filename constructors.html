@@ -1,0 +1,21 @@
+<script>
+	
+	// note how different this is from object literals
+	
+	// it's hard to tell what makes this a "constructor function"
+	// it's not in the definition, it's in the INVOCATION
+	
+	var Cat = function(name) {
+		this.name = name;
+		this.speak = function() {
+			document.writeln('<br />"meow" says ' + this.name);
+		};
+	}
+	
+	var rufus = new Cat('Rufus');
+	rufus.speak();
+	
+	var gregory = new Cat('Gregory');
+	gregory.speak();
+
+</script>

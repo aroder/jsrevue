@@ -1,0 +1,45 @@
+<script>
+	// all variables in scope at the time of a function's DEFINITION
+	// will be available at the time of the function's EXECUTION
+	// this is referred to as a closure
+	
+	// Often when you see a function returning another function,
+	// the author is doing so to benefit from closures
+	
+	var func1 = function() {
+		document.writeln('<br />func1');
+	}
+	
+	var makeCounter = function(interval) {
+		var counter = 0;
+		
+		// the return value is this function
+		return function() {
+			counter += interval;
+			return counter;
+		}
+	}
+	
+	var countByOnes = makeCounter(1);
+	var countByThrees = makeCounter(3);
+	
+	// note that in this, the global scope, "interval" and "counter" are undefined
+	document.writeln('<br />interval is ' + typeof(interval));
+	document.writeln('<br />counter is ' + typeof(counter));
+	document.writeln('<br /><br />');
+	
+	for (var i = 0; i < 5; i++) {
+		// but countByOnes has a closure to "interval" and "counter"
+		var nextNumber = countByOnes();
+		document.writeln(nextNumber + ', ');
+	}
+	
+	document.writeln('<br /><br />')
+	
+	for (var i = 0; i < 5; i++) {
+		// and countByThrees has its own, separate closure from countByOnes
+		var nextNumber = countByThrees();
+		document.writeln(nextNumber + ', ');
+	}
+	
+</script>

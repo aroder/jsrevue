@@ -1,0 +1,15 @@
+<html>
+    <head>
+        <script>
+            // this is an ANTI pattern
+            // as in, don't do it ever again
+        </script>
+    </head>
+	<body>
+		<form method="get" action="#">
+			<button onclick="document.forms[0].submit();">Bad submit!</button>
+				
+			<button>Submit</button>
+		</form>
+	</body>
+</html>

@@ -1,0 +1,29 @@
+<script>
+	// var1, defined in the global scope, and read immediately
+	// in the same scope
+	var var1 = 'hello';
+	document.writeln('<br />var1 = ' + var1);
+	
+	var var2 = 'goodbye';
+	var func1 = function() {
+	
+		// var2 is in scope at the time of func1's DEFINITION, 
+		// so it is in scope when func1 is EXECUTED
+		document.writeln('<br />var2 = ' + var2);
+		
+		// however, innerVar1 will not be in scope outside of the function
+		var innerVar1 = 'long time no see';
+	}
+
+	func1();
+	
+	document.writeln('<br />innerVar1 = ' + typeof(innerVar1));
+	
+	// same example as above, only with an anonymous function
+	var var3 = 'good riddance';
+	(function() {
+		document.writeln('<br />var3 = ' + var3);
+	})();
+	
+	
+</script>

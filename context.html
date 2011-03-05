@@ -1,0 +1,62 @@
+<script>
+    // the accumulator object, just keeps track of a total variable
+    var accumulator = {
+        total: 0,
+        clear: function(){
+            this.total = 0;
+        },
+        add: function(x){
+            this.total += x;
+        },
+        getResult: function(){
+            return this.total;
+        }
+    };
+    
+    var printCounter = 0;
+    function prepareLine(){
+        printCounter++;
+        document.write('<br />' + printCounter + '.  ');
+    }
+    
+    // prints the output of whatever function gets passed in
+    function printResultOfFunction(func){
+        prepareLine();
+        document.writeln('output of func is: ' + func());
+    }
+    
+    function printResultOfFunctionAndContext(contextObject, func){
+        prepareLine();
+        document.writeln('output of func is: ' + func.apply(contextObject, arguments));
+    }
+    
+    accumulator.clear();
+    accumulator.add(100);
+    accumulator.add(200);
+    
+	
+    // 1. 
+    // the expected output (300) matches the actual output
+    prepareLine();
+    document.writeln('output of getResult(): ' + accumulator.getResult());
+    
+    // 2. 
+    // the expected output is "300" but instead, we get "undefined"
+    // because the "this" variable is promiscuous, it just contains the value of the
+    // of the CURRENT FUNCTION scope.  In this case, the "this" variable == window when // in the context of printResultOfFunction.  Thus, this.total == window.total,
+    // which is undefined
+    printResultOfFunction(accumulator.getResult);
+    
+    // 3. 
+    // this method runs getResult as a part of the accumulator object, so the context
+    // is the accumulator object.  Thus, this.total == accumulator.total.
+    // we then take that output and return its value.  This is equivalent:
+    // printResultOfFunction(function() { return 300; });
+    printResultOfFunction(function(){
+        return accumulator.getResult();
+    });
+    
+    // 4. 
+    printResultOfFunctionAndContext(accumulator, accumulator.getResult);
+	        
+</script>

@@ -1,0 +1,49 @@
+<script>
+    
+    // note how different this is from object literals
+    
+    // it's hard to tell what makes this a "constructor function"
+    // it's not in the definition, it's in the INVOCATION
+    
+    var Cat = function(name){
+        this.name = name;
+        this.speak = function(){
+            document.writeln('<br />"meow" says ' + this.name);
+        };
+    }
+    
+    var myCat = new Cat('Paulina');
+    myCat.speak();
+    
+    var func1 = myCat.speak;
+    
+    // it's the same, right?
+    myCat.speak();
+    func1();
+	
+
+	// define a different constructor function, without the "speak" function
+	var Dog = function(name) {
+		this.name = name;
+	}
+	
+	document.writeln('<br /><br />');
+	
+	// define speak as a separate function
+	var speak = function() {
+		document.writeln('<br />"ruff" says ' + this.name);
+	}
+
+	var harold = new Dog('Harold');
+
+	// speak runs in the global scope, so this.name is undefined
+	speak();
+	
+	// javascript function "apply" allows to specify a context
+	speak.apply(harold);
+	
+	// notice the polymorphism here.  As long as the context implements
+	// the "interface" (this.name), it just works
+	speak.apply(myCat);
+
+</script>

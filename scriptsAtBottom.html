@@ -1,0 +1,20 @@
+<html>
+	<head>
+		<script>
+			// script at top
+			// look how executing javascript blocks the thread
+			// you can tell because the body hasn't shown up yet
+			alert('js execution is blocking at top');
+		</script>
+	</head>
+	<body>
+		<h1>The body</h1>
+		<script>
+			// script at bottom
+			// still blocks, but at least all the DOM is there
+			// gives a perception to the user of better performance
+			// because they see things on the page earlier
+			alert('js execution is blocking from bottom');
+		</script>
+	</body>
+</html>

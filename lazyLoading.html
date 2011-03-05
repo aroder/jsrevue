@@ -1,0 +1,30 @@
+<script>
+	// lazy loading pattern
+	
+	function pretendThisIsAnExpensiveLongRunningCallToCalculateWinningLotteryNumberOrSomething() {
+		document.writeln('<br />executing the function with the long name');
+		return '5 - 6 - 20 - 29 - 36 - 3';
+	}
+	
+	// the anonymous function has a closure to lottoNumber
+	// getWinningNumber will call the long function once and only once
+	var crystalBall = (function() {
+		var lottoNumber; // is undefined right now
+		
+		return {
+			getWinningNumber : function() {
+				if ('undefined' == typeof(lottoNumber)){
+					lottoNumber = pretendThisIsAnExpensiveLongRunningCallToCalculateWinningLotteryNumberOrSomething();
+				}
+				return lottoNumber;
+			}
+		};
+	})();
+	
+	// even though we call "getWinningNumber" 3 times, the long, expensive
+	// call only executes the first time.  Lazy loading!
+	for (var i = 0; i < 3; i++) {
+		document.writeln('<br />this is a winner: ' + crystalBall.getWinningNumber());
+	}
+	
+</script>

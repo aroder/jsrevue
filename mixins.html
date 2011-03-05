@@ -1,0 +1,85 @@
+<html>
+    <head>
+        <style>
+            #myDiv {
+                -moz-border-radius: 15px 15px 15px 15px;
+                border: 5px double gray;
+                float: left;
+                margin: 1em;
+                padding: 1em;
+            }
+			.clearfix {
+				clear: both;
+			}
+        </style>
+        <script src="dojo-1.5.0.js"></script>
+        <script>
+            var flash = function(node, timesToFlash, color){
+            
+				if (!node) {
+					node = this;
+				}
+				
+                node = dojo.byId(node);
+                
+                // becuase this function is recursive, a zero passed in is significant.  It means we should not animate again
+                if (0 === timesToFlash) {
+                    return;
+                }
+                
+                // if not zero, but undefined, set the default to 2
+                timesToFlash = timesToFlash || 2;
+                
+                // default flash color is yellow
+                color = color || '#FFE600';
+                
+                // save the starting color so we can refer back to it after the flash
+                var startingColor = dojo.style(node, 'backgroundColor');
+                
+                // the basic animation is flashing to a color, then reverting back to the startingColor
+                var animation = dojo.fx.chain([dojo.animateProperty({
+                    node: node,
+                    duration: 25,
+                    properties: {
+                        backgroundColor: color
+                    }
+                }), dojo.animateProperty({
+                    node: node,
+                    duration: 250,
+                    properties: {
+                        backgroundColor: startingColor
+                    }
+                })])
+                
+                // after the animation is over, we check to see if we decrement the number of times to flash and call this function again
+                var handle = dojo.connect(animation, 'onEnd', dojo.hitch(this, function(){
+                    this.flash(node, timesToFlash - 1);
+                }));
+                
+                animation.play();
+            };
+
+			dojo.require('dojo.fx');            
+            dojo.ready(function(){
+				
+				var theDiv = dojo.byId('myDiv');
+				
+				// we mix in extra functionality into theDiv object, which is a DOM element
+				theDiv.flash = flash;
+
+				dojo.connect(dojo.query('button')[0], 'onclick', function() {
+					theDiv.flash();
+				});
+				
+            })
+        </script>
+    </head>
+    <body>
+        <div id="myDiv">
+            Hello there
+        </div>
+		<div class="clearFix">
+			<button>Flash it!</button>
+		</div>
+    </body>
+</html>

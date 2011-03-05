@@ -1,0 +1,45 @@
+<script>
+	// namespacing and module patterns
+
+	// simple namespacing
+	var namespace = {};
+	namespace.module = {};
+	
+	// simple module using a closure
+	namespace.module.writer = (function() {
+		var my = {};
+		
+		privateVariable = 'foo';
+		my.publicVariable = 'bar';
+
+		counter = 0;
+		
+		// private function
+		function addOne() {
+			counter++;
+		}
+		
+		my.increment = function() {
+
+			// the private function "addOne" is in scope at the time of
+			// "my.increment's" definition
+			addOne();
+		}		
+		
+		my.write = function() {
+			document.writeln('<br />counter = ' + counter);
+		}
+		
+		return my;
+	})();
+	
+	namespace.module.writer.increment();
+	namespace.module.writer.increment();
+	namespace.module.writer.write();
+	
+	document.writeln('<br />counter = ' + namespace.module.writer.counter);
+	
+	
+	// by the way, you can make for less typing by doing something like:
+	var writer = namespace.module.writer;
+</script>

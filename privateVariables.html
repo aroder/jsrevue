@@ -1,0 +1,30 @@
+<script>
+	// the private variable pattern
+	
+	var obj1 = {
+		// not really private, but simple and understood to be treated as such
+		_myPrivateVar : 'don\'t read me!'
+	};
+	
+	// truly private variables using a closure
+	// the anonymous function executes immediately
+	var obj2 = (function(){
+		var myPrivateVar = 'you cannot see me directly';
+		
+		// return an object literal.  Because at it's definition the variable
+		// "myPrivateVar" is in scope, it can see the variable, while callers
+		// from elsewhere cannot
+		return {
+			myPublicGetter : function() {
+				return myPrivateVar;
+			}
+		};
+	})();
+	
+	
+	document.writeln('<br />obj1._myPrivateVar = ' + obj1._myPrivateVar);
+	document.writeln('<br />obj2.myPrivateVar = ' + obj2.myPrivateVar);
+	
+	// notice the getter function must be executed with ()
+	document.writeln('<br />obj2.myPublicGetter = ' + obj2.myPublicGetter());
+</script>

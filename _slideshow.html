@@ -1,0 +1,136 @@
+<html>
+    <head>
+        <style>
+        	body {
+        		background-color: #3D3D3D;
+        	}
+			#page {
+				margin: 1em auto;
+				width: 98%;
+			}
+            #slide, #source {
+                -webkit-border-radius: 20px;
+                -moz-border-radius: 20px;
+                border-radius: 20px;
+				background-color: #fafafa;
+				padding: 20px;
+				float: left;
+            }
+
+			#slide {
+				width: 35%;
+			}			
+			#source {
+				overflow: auto;
+				margin-right: 1em;
+				width: 55%;
+				height: 85%;
+			}
+			
+			h2 {
+				color: #ccf;
+				text-align: center;
+			}
+			iframe {
+				border: none;
+				 
+				height: 85%;
+				
+				width: 100%;
+			}
+        </style>
+        <script src="jquery-1.5.1.js"></script>
+        <script>
+            $(function(){
+				var keys = {
+					left : 37,
+					up: 38,
+					right: 39,
+					down: 40
+				}
+                var pages = [
+					'datatypes.html', 
+					'functions.html', 
+					'objects.html',
+					'arrays.html',
+					'context.html',
+					'scope.html',
+					'closures.html',
+					'constructors.html',
+					'scope2.html',
+					'prototypes.html',
+					'regex.html',
+					'scriptsAtBottom.html',
+					'privateVariables.html',
+					'modules.html',
+					'lazyLoading.html',
+					'facade.html',
+					'mixins.html',
+					'mixingMarkupAndBehavior.html',
+					'pollutingGlobalScope.html'					
+				];
+				
+				// increment should either be 1 or -1.  Defaults to 1.
+				var next = function(direction) {
+					direction = direction || 1;
+					
+					var currentPage = $('#slideFrame').attr('src');
+					var indexOfCurrentPage = pages.indexOf(currentPage);
+					var nextPageNumber = indexOfCurrentPage + direction;
+					
+					// if next then loop to first page
+					if (nextPageNumber == pages.length) {
+						nextPageNumber = 0;
+					}
+					
+					// if previous then loop to last page
+					if (nextPageNumber == -1) {
+						nextPageNumber = pages.length - 1;
+					}
+					goToPage(nextPageNumber);
+				};
+				
+				var goToPage = function (pageNumber) {
+					console.log('going to page ' + pageNumber);
+					$('#slideFrame').attr('src', pages[pageNumber]);
+					var title = (pageNumber + 1) + ' ' + pages[pageNumber];
+					title = title.replace('.html', '');
+					$('h2').html(title);
+				};
+				
+				$('#slideFrame').bind('load', function(evt) {
+					//console.log(document.getElementById('slideFrame').contentDocument);
+					console.log($(this).get(0).contentDocument.lastChild);
+					$('#sourceText').text($(this).get(0).contentDocument.lastChild.innerHTML);
+				});
+				
+				// start at the first slide
+				goToPage(0);
+				
+				$(window).keydown(function(evt){
+					switch (evt.keyCode) {
+						case keys.right:
+							next();
+							return false;
+						break;
+						case keys.left:
+							next(-1);
+							return false;
+						break;
+					}
+				});
+            });
+        </script>
+    </head>
+    <body>
+    	<div id="page">
+	    	<h2></h2>
+			<div id="source">
+				<pre id="sourceText"></pre>
+			</div>
+	        <div id="slide">
+	        	<iframe id="slideFrame" scrolling="auto"></iframe>
+	        </div>
+		</div>
+    </body>
+</html>

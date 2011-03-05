@@ -1,0 +1,105 @@
+<script>
+    
+    // a local variable named func1 is created
+    var func1 = function(){
+        document.writeln('<br />executing func1');
+        document.writeln('<br />');
+    }
+    
+	var funcA = func1;
+	
+    // a global variable named func2 is created
+    function func2(){
+        document.writeln('<br />executing func2')
+        document.writeln('<br />');
+    }
+    
+    // paramaters can be dynamically typed
+    var func3 = function(var1){
+        document.writeln('<br />executing func3.  Type of var1 is ' + typeof(var1));
+        document.writeln('<br />');
+    }
+
+	var func4 = function() {
+		
+		// you can return any of the data types we've discussed
+		// you can even return a function if you wanted to
+		return 'Lunch time yet?';
+	}
+
+	var func5 = function() {
+		
+		// all functions implicitly return undefined if no return value specified
+		// we can return early if we want by using the return key word.
+		return;
+		
+		document.writeln('this will never write out to the document');
+	}
+    
+    var outerFunc = function(){
+    
+        document.writeln('<br />executing outerFunc');
+        document.writeln('<br />');
+        
+        function innerFunc(){
+            document.writeln('<br />executing innerFunc fartface');
+            document.writeln('<br />');
+        }
+    }
+	
+    
+	// func1 is globally scoped
+    func1();
+	
+	// the browser has a predefined, global variable named "window" 
+	// that is a pointer to to the global scope
+    window.func1();
+	
+	// "this" is a key word that refers to the current context.
+	// the current context is the global scope
+    this.func1();
+	
+	funcA();
+	
+    document.writeln('<br />');
+    document.writeln('<br />');
+    
+	// func 2 is locally scoped.  The local scope happens to be the global scope
+    func2();
+	
+	// func3 shows that parameters (and all variables) are dynamically typed
+    func3('a string variable');
+    func3(false);
+    func3(7777);
+    
+    document.writeln('<br />');
+    document.writeln('<br />');
+    
+	
+	var theReturnValue = func4();
+	document.writeln('<br />theReturnValue is ' + theReturnValue);
+	
+	document.writeln('<br />return value of func5 is ' + func5());
+	
+	
+	document.writeln('<br />');
+    document.writeln('<br />');
+	
+    // innerFunc is defined locally inside the outerFunc function
+	// it is not visible outside of outerFunc
+    try {
+        innerFunc();
+    } 
+    catch (err) {
+        document.writeln('<br />caught an error: ' + err.message);
+    }
+    
+	// not even visible if we try this
+    try {
+        outerFunc.innerFunc();
+    } 
+    catch (err) {
+        document.writeln('<br />caught another error: ' + err.message);
+    }
+	
+</script>
